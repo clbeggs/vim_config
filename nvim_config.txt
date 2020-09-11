@@ -1,0 +1,8 @@
+au ColorScheme * hi Normal ctermbg=none guibg=none
+au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+set ignorecase
+let &packpath = &runtimepath
+let g:python3_host_prog = '/home/epiphyte/anaconda3/bin/python'
+let g:python_host_prog = '/usr/bin/python2'
+source ~/.vimrc

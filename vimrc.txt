@@ -1,0 +1,104 @@
+syntax on
+set noerrorbells "No sounds when reaching EOF
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set nu "line numbers
+set nowrap
+set smartcase 
+set ignorecase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch "While search you get results
+set scrolloff=3 "Keep 3 lines while scrolling down 
+" highlights column to the right of screen
+set colorcolumn=80
+set number relativenumber
+set nu rnu
+set foldmethod=indent
+set foldlevelstart=99
+set omnifunc=LaTeXtoUnicode#omnifunc
+highlight ColorColumn ctermbg=0 guibg=lightgrey
+
+" highlights line where cursor is on
+set cursorline
+highlight cursorline ctermbg=0 guibg=lightgrey
+call plug#begin('~/.vim/plugged')
+Plug 'morhetz/gruvbox' "Color Scheme
+Plug 'jremmen/vim-ripgrep' "Fast grep
+Plug 'vim-utils/vim-man' "typescript files are nicely colored
+Plug 'lyuts/vim-rtags' "great for C++
+Plug 'mbbill/undotree' "undo stuff
+Plug 'git@github.com:kien/ctrlp.vim.git'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'inducer/pudb' "python debugger
+Plug 'joshdick/onedark.vim'
+Plug 'szymonmaszke/vimpyter' "vim-plug
+Plug 'JuliaEditorSupport/julia-vim'
+call plug#end()
+
+
+colorscheme gruvbox
+set background=dark
+
+"Allows rg to detect root, faster searching
+if executable('rg')
+    let g:rg_derive_root='true'
+endif
+
+
+let g:ctrlp_user_command = [ '.git/' , 'git --git-dir=%s/.git ls-files -oc --exclude-standard'] " help ignore things we dont want to search for
+let mapleader = " " "Set leader key
+let g:netrw_browse_split=2 
+let g:netrw_banner = 0
+let g:netrw_winsize = 25 
+let g:latex_to_unicode_tab = 1
+let g:latex_to_unicode_file_types = ".jl"
+let g:latex_to_unicode_cmd_mapping = ['<C-L>']
+
+let g:ctrlp_use_caching = 0 
+" remove whitespace to left of line
+nnoremap <leader>le :left<CR> 
+nnoremap <leader>n :noh<CR>
+" close YCM function preview window
+nnoremap <leader>w :pclose<CR>
+
+nnoremap <leader>h :wincmd h<CR> 
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+nnoremap <leader>u :UndotreeShow<CR>
+nnoremap <leader>pv :wincmd v<bar> :Ex <bar> :vertical resize 30 <CR>
+nnoremap <Leader>ps :Rg<SPACE>
+nnoremap <silent> <Leader>+ :vertical resize +5<CR>
+nnoremap <silent> <Leader>- :vertical resize -5<CR>
+
+inoremap <C-L> <C-X><C-O> 
+" For julia-vim, latex_to_unicode in insert mode
+
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" nnoremap <silent> <Leader>gh :YcmCompleter GetDoc<CR>
+" nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
+" nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+
