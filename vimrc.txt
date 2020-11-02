@@ -14,57 +14,174 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch "While search you get results
 set scrolloff=3 "Keep 3 lines while scrolling down 
-" highlights column to the right of screen
-set colorcolumn=80
+set colorcolumn=80 " highlights column to the right of screen
 set number relativenumber
 set nu rnu
 set foldmethod=indent
 set foldlevelstart=99
 set omnifunc=LaTeXtoUnicode#omnifunc
-highlight ColorColumn ctermbg=0 guibg=lightgrey
-
-" highlights line where cursor is on
 set cursorline
-highlight cursorline ctermbg=0 guibg=lightgrey
+
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox' "Color Scheme
-Plug 'jremmen/vim-ripgrep' "Fast grep
+Plug 'lervag/vimtex'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mbbill/undotree' "undo stuff
 Plug 'vim-utils/vim-man' "typescript files are nicely colored
 Plug 'lyuts/vim-rtags' "great for C++
-Plug 'mbbill/undotree' "undo stuff
-Plug 'git@github.com:kien/ctrlp.vim.git'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'inducer/pudb' "python debugger
-Plug 'joshdick/onedark.vim'
-Plug 'szymonmaszke/vimpyter' "vim-plug
+Plug 'majutsushi/tagbar'
+Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-fugitive'
+Plug 'gu-fan/InstantRst'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
+Plug 'puremourning/vimspector'
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'Yggdroot/indentLine'
+Plug 'codehearts/mascara-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'jmcantrell/vim-virtualenv'
+
+" Colorschemes
+Plug 'morhetz/gruvbox' 
+Plug 'joshdick/onedark.vim'
+Plug 'sainnhe/gruvbox-material'
+Plug 'sainnhe/forest-night'
+Plug 'sainnhe/edge'
+Plug 'sainnhe/sonokai'
+Plug 'arcticicestudio/nord-vim'
+Plug 'hzchirs/vim-material'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'nightsense/carbonized'
+Plug 'kuntau/ayu-vim' " Ayu colorscheme with italics
+Plug 'junegunn/seoul256.vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+Plug 'tyrannicaltoucan/vim-deep-space'
+Plug 'ajmwagar/vim-deus'
+Plug 'rakr/vim-one'
 call plug#end()
 
 
-colorscheme gruvbox
-set background=dark
+if (has('nvim'))
+  let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
+endif
+
+if empty(v:servername) && exists('*remote_startserver')
+      call remote_startserver('VIM')
+endif
+
+
+" Cosmetics
+highlight Comment cterm=italic
+let g:material_terminal_italics = 1
+let g:material_theme_style = 'palenight'
+set termguicolors
+" let g:gruvbox_material_background = 'soft'
+let g:ayu_comment_italic=1 " enable italic for comments
+let g:ayu_string_italic=1  " enable italic for strings
+let g:ayu_type_italic=1    " enable italic for types
+let g:ayu_keyword_italic=1 " enable italic for keywords
+let g:ayucolor='light'
+let g:material_theme_style = 'lighter'
+
+set background=light
+colorscheme nord
+" let g:airline_theme='material'
+
+let g:mascara_italic = [ 'Statement', 'Comment', 'ErrorMsg', 'Identifier', 'Type' ] " Comments, error messages, line numbers
+let g:mascara_apply_at_startup = 1 " Apply Mascara @ startup
+
+
+" LaTeX
+let g:tex_conceal = 'abdmg'
+let g:tex_flavor = 'plain'
+let g:vimtex_complete_close_braces=1
+let g:vimtex_view_method='zathura'
+let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+let g:vimtex_view_general_options_latexmk = '--unique'
+let g:vimtex_quickfix_mode=0
+" Julia Latex
+let g:latex_to_unicode_tab = 1
+let g:latex_to_unicode_file_types = ".jl"
+let g:latex_to_unicode_cmd_mapping = ['<C-L>']
+
+
+" Snippets
+let g:UltiSnipsExpandTrigger="<tab>"                                            
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+
+
+" Airline Stuff
+let g:airline_section_a = airline#section#create_right(['  ', 'mode',''])
+let g:airline_section_y = ''
+let g:airline_section_z = ''
+"let g:airline_theme = 'night_owl'
+"let g:airline#extensions#hunks = 1
+"let g:airline_extensions = ['coc', 'virtualenv', 'vimtex', 'coc_git']
+"let g:airline_powerline_fonts = 1 " Have to use powerline font in terminal
+
+" Code
+set conceallevel=0
+let g:python_highlight_space_errors = 0
+
+" Toggle Tagbar
+nmap T : TagbarToggle<CR>
+
+" For julia-vim, latex_to_unicode in insert mode
+inoremap <C-L> <C-X><C-O> 
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('doHover')
+  endif
+endfunction
+
+" Vimspector Settings
+let g:vimspector_base_dir=expand( '$HOME/.vim/vimspector-config' )
+let g:vimspector_enable_mappings = 'HUMAN'
 
 "Allows rg to detect root, faster searching
 if executable('rg')
     let g:rg_derive_root='true'
 endif
 
+" IndentLine
+let g:indentLine_char = '∣'
+let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_first_char = '∣'
 
 let g:ctrlp_user_command = [ '.git/' , 'git --git-dir=%s/.git ls-files -oc --exclude-standard'] " help ignore things we dont want to search for
 let mapleader = " " "Set leader key
 let g:netrw_browse_split=2 
 let g:netrw_banner = 0
 let g:netrw_winsize = 25 
-let g:latex_to_unicode_tab = 1
-let g:latex_to_unicode_file_types = ".jl"
-let g:latex_to_unicode_cmd_mapping = ['<C-L>']
-
 let g:ctrlp_use_caching = 0 
+
 " remove whitespace to left of line
 nnoremap <leader>le :left<CR> 
 nnoremap <leader>n :noh<CR>
-" close YCM function preview window
-nnoremap <leader>w :pclose<CR>
 
 nnoremap <leader>h :wincmd h<CR> 
 nnoremap <leader>j :wincmd j<CR>
@@ -76,19 +193,6 @@ nnoremap <Leader>ps :Rg<SPACE>
 nnoremap <silent> <Leader>+ :vertical resize +5<CR>
 nnoremap <silent> <Leader>- :vertical resize -5<CR>
 
-inoremap <C-L> <C-X><C-O> 
-" For julia-vim, latex_to_unicode in insert mode
-
-
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" nnoremap <silent> <Leader>gh :YcmCompleter GetDoc<CR>
-" nnoremap <silent> <Leader>gd :YcmCompleter GoTo<CR>
-" nnoremap <silent> <Leader>gf :YcmCompleter FixIt<CR>
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
