@@ -1,8 +1,18 @@
-au ColorScheme * hi Normal ctermbg=none guibg=none
-au ColorScheme myspecialcolors hi Normal ctermbg=red guibg=red
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 set ignorecase
 let &packpath = &runtimepath
-let g:python3_host_prog = '/home/epiphyte/anaconda3/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python2'
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('doHover')
+  endif
+endfunction
+
 source ~/.vimrc
