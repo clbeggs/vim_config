@@ -1,0 +1,42 @@
+snippet makeclass "class" bA
+class ${1:class_name} {
+public:
+private:
+};
+endsnippet
+
+snippet makedoc "docs" bA
+/**
+	@brief $1
+
+	@param
+	@return
+*/
+endsnippet
+
+snippet makestruct "struct" bA
+struct ${1:struct_name} {
+
+
+};
+endsnippet
+
+snippet makeheader "header" bA
+`!p snip.rv = "/**\n  @file " + snip.basename + "\n  @author Chris Beggs\n  @brief \n*/\n\n#pragma once"`
+endsnippet
+
+
+snippet includeguard "include guards" bA
+#ifndef $1
+#define $1
+
+
+
+#endif // $1 
+endsnippet
+
+
+
+
+
+

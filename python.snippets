@@ -1,0 +1,40 @@
+
+
+
+
+
+snippet shebang "shebang" bA
+#!/usr/bin/env python
+endsnippet
+
+snippet makedef "def" bA
+def ${1:function_name}():
+	r"""
+		Args:
+		Returns:
+	"""
+endsnippet
+
+snippet makedoc "docs" bA
+r"""$0
+	Args:
+	Returns:
+"""
+endsnippet
+
+snippet makeclass "class" bA
+class ${1:class_name}():
+	r""" """
+	def __init__(self):
+		pass
+endsnippet
+
+snippet makemain "main" bA
+if __name__ == "__main__":
+	$1
+endsnippet
+
+
+
+
+
