@@ -1,0 +1,78 @@
+i3-wm.mod: Mod1
+i3-wm.alt: Mod4
+
+gnome.gtk.theme: Pop
+gnome.icon.theme: Pop
+gnome.wallpaper: /home/epiphyte/Pictures/Wallpapers/wallhaven-y8g17g.jpg
+
+
+! Pop Colors
+#define color_base03   #333333
+#define color_base02   #88807C
+#define color_base01   #88807C
+#define color_base00   #F2F2F2
+#define color_base0    #D3D7CF
+#define color_base1    #F2F2F2
+#define color_base2    #EEEEEC
+#define color_base3    #F2F2F2
+#define color_yellow   #C4A000
+#define color_orange   #F15D22
+#define color_red      #CC0000
+#define color_magenta  #75507B
+#define color_violet   #AD7FA8
+#define color_blue     #3465A4
+#define color_cyan     #06989A
+#define color_green    #4E9A06
+
+
+
+St.font:              typeface_terminal
+St.color0:            color_base03
+St.color1:            color_red     
+St.color2:            color_green       
+St.color3:            color_yellow       
+St.color4:            color_blue       
+St.color5:            color_magenta       
+St.color6:            color_cyan       
+St.color7:            color_base1       
+St.color8:            color_base00       
+St.color9:            color_orange      
+St.color10:           color_base01       
+St.color11:           color_base00       
+St.color12:           color_base0       
+St.color13:           color_violet       
+St.color14:           color_base1       
+St.color15:           color_base3
+
+i3-wm.client.focused.color.border: #06989A
+i3-wm.client.focused.color.background: #06989A
+i3-wm.client.focused.color.text: color_base3
+i3-wm.client.focused.color.indicator: #06989A
+i3-wm.client.focused.color.child_border: #F15D22
+
+i3-wm.client.focused_inactive.color.border: color_base03
+i3-wm.client.focused_inactive.color.background: color_base02
+i3-wm.client.focused_inactive.color.text: color_base0
+i3-wm.client.focused_inactive.color.indicator: color_base02
+i3-wm.client.focused_inactive.color.child_border: color_base03
+
+i3-wm.client.unfocused.color.border: color_base03
+i3-wm.client.unfocused.color.background: color_base02
+i3-wm.client.unfocused.color.text: color_base0
+i3-wm.client.unfocused.color.indicator: color_base02
+i3-wm.client.unfocused.color.child_border: color_base03
+
+i3-wm.client.urgent.color.border: #F15D22
+i3-wm.client.urgent.color.background: #F15D22
+i3-wm.client.urgent.color.text: color_base3
+i3-wm.client.urgent.color.indicator: #F15D22
+i3-wm.client.urgent.color.child_border: #F15D22
+
+
+i3-wm.window.border.size: 3
+i3-wm.floatingwindow.border.size: 3
+i3-wm.gaps.inner.size:	5
+i3-wm.gaps.outer.size:	0
+
+
+
