@@ -1,0 +1,63 @@
+[bar/mainbar]
+monitor = ${env:MONITOR:}
+background = #20ffffff
+foreground = #ffffff
+font-0 = SF Pro Text:style=Medium:pixelsize=11;2
+font-1 = Font Awesome 5 Free Solid:style=Regular:size=9;2
+font-2 = Font Awesome 5 Brands:style=Regular:size=13;2
+height = 24
+line-size = 2
+modules-left = apple i3
+modules-center = datetime
+modules-right = tuxedo-cc battery network
+padding = 3
+module-margin = 1.5
+
+[module/apple]
+type = custom/text
+content = 
+
+[module/i3]
+type = internal/i3
+label-focused-underline = #FFFFFF
+strip-wsnumber = true
+label-mode-padding = 1
+label-focused = %index%
+label-unfocused = %index%
+label-focused-padding = 1
+label-unfocused-padding = 1
+enable-scroll = false
+reverse-scroll = false
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP0
+format-charging = <ramp-capacity> <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = <label-full>
+ramp-capacity-0 = ""
+ramp-capacity-1 = ""
+ramp-capacity-2 = ""
+ramp-capacity-3 = ""
+ramp-capacity-4 = ""
+full-at = 97
+
+label-charging = "%percentage%%"
+label-discharging = "%percentage%%"
+label-full = "%{F#00FF00}%{F-} %percentage%%"
+
+[module/network]
+type = internal/network
+interface = wlp2s0
+label-disconnected = " Not connected" 
+label-connected = ""
+
+[module/tuxedo-cc]
+type = custom/text
+content = 
+click-left = sh /home/epiphyte/.config/polybar/scripts/launch_tuxedo_cc.sh
+
+[module/datetime]
+type = internal/date
+date = %A %b %d  %H:%M:%S
