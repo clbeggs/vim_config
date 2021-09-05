@@ -1,8 +1,7 @@
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 set ignorecase
 let &packpath = &runtimepath
-let g:python3_host_prog = '/home/epiphyte/.pyenv/versions/neovim/bin/python'
-"let g:python3_host_prog = '/home/epiphyte/.pyenv/versions/pypy3.6-7.3.1/bin/python'
+let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python2'
 
 let g:matchparen_timeout = 5
@@ -162,14 +161,14 @@ let g:mascara_italic = [ 'Statement', 'Comment', 'ErrorMsg', 'Identifier', 'Type
 let g:mascara_apply_at_startup = 1 " Apply Mascara @ startup
 "
 "" ALE Linting and Fixing
-let g:ale_fix_on_save = 1
+" let g:ale_fix_on_save = 1
 let g:ale_linters_explicit = 1
 highlight ALEWarning ctermbg=DarkMagenta gui=None
 highlight ALEError ctermbg=Red gui=None
 highlight ALEInfo ctermbg=LightGrey gui=None
 highlight ALEStyleWarning ctermbg=LightGrey gui=None
 
-let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '```':'```', '"""':'"""', "'''":"'''", '<':'>'}
+let g:AutoPairs = {'(':')', '[':']', '{':'}',"'":"'",'"':'"', '```':'```', '"""':'"""', "'''":"'''"}
 let g:AutoPairsFlyMode = 0
 let g:ale_sign_error = ' E'
 let g:ale_sign_warning = ' W'
@@ -196,13 +195,19 @@ let g:ale_tex_chktex_options = "-n 1 -n 8"   " -n NUM supresses warnings for tha
 
 " C++/C 
 let g:ale_c_astyle_executable = "/usr/bin/astyle"
-let g:ale_c_clangd_executable = "/usr/bin/clangd-11"
-let g:ale_cpp_clangd_executable = "/usr/bin/clangd-11"
+let g:ale_c_clangd_executable = "/usr/bin/clangd-12"
+let g:ale_cpp_clangd_executable = "/usr/bin/clangd-12"
 let g:ale_c_cppcheck_executable = "/usr/bin/cppcheck"
 let g:ale_cpp_cppcheck_executable = "/usr/bin/cppcheck"
 let g:ale_c_cppcheck_executable="/usr/local/bin/cppcheck"
 
 "##### ALE FIXER OPTIONS ######################################################
+cnoreabbrev Fix ALEFix
+cnoreabbrev FIx ALEFix
+cnoreabbrev FIX ALEFix
+cnoreabbrev fix ALEFix
+
+
 let g:ale_fixers = {'python': ['black', 
                     \ 'trim_whitespace', 'remove_trailing_lines',
                     \'isort'], 
@@ -213,7 +218,9 @@ let g:ale_fixers = {'python': ['black',
                     \'cmake': ['cmake-format']}
 
 let g:ale_c_clangformat_options = "-style=file" 
-let g:ale_c_clangformat_executable = "/usr/bin/clang-format-11" 
+let g:ale_c_clangformat_executable = "/usr/bin/clang-format-12"
+
+let g:ale_rust_rustfmt_options = "--config tab_spaces=2"
 
 let g:ale_cpp_parse_compile_commands=1
 let g:ale_cpp_build_dir_names = ['build', 'bin', '.']
@@ -240,9 +247,9 @@ nmap <silent> <C-j> <Plug>(ale_next_wrap)
 " let g:tex_conceal="abdgm"
 " set concealcursor="n"
 let g:tex_flavor='latex'
-let g:vimtex_view_method='zathura'
+let g:vimtex_view_method='mupdf'
 let g:vimtex_quickfix_mode=0
-let g:latex_view_general_viewer = 'zathura'
+let g:latex_view_general_viewer = 'mupdf'
 " VIMTEX COMPILER OPTIONS SET IN $HOME/.LATEXMKRC
 
 
@@ -346,4 +353,5 @@ inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 autocmd FileType * set formatoptions-=cro
+
 
