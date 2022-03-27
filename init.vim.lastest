@@ -1,6 +1,8 @@
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
 set ignorecase
 let &packpath = &runtimepath
+
+" Must set paths
 let g:python3_host_prog = '/usr/bin/python3'
 let g:python_host_prog = '/usr/bin/python2'
 let g:coc_node_path = '/home/epiphyte/InstalledSoftware/node-v17.6.0-linux-x64/bin/node'
@@ -57,17 +59,16 @@ call plug#begin('~/.vim/plugged')
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'  " Linters and fixers
 Plug 'lervag/vimtex' " Latex stuff
-" Plug 'ryanoasis/vim-devicons' " Icons and stuff
 Plug 'sheerun/vim-polyglot' " Better syntax highlighting
 
 Plug 'justinmk/vim-sneak'  " Search feature
 Plug 'mbbill/undotree' "undo stuff
 Plug 'lyuts/vim-rtags', {'for': ['cpp', 'c']} "great for C++
 Plug 'majutsushi/tagbar'
-"Plug 'osyo-manga/vim-anzu' " Search number with ale
-Plug 'nathanaelkane/vim-indent-guides'
+if exists('g:vscode')
+  Plug 'nathanaelkane/vim-indent-guides'
+endif
 Plug 'codehearts/mascara-vim' " Italic stuff
-" Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'} " for better latex conceal
 Plug 'preservim/nerdcommenter'  " Plug for easy commenting
 Plug 'francoiscabrol/ranger.vim'
 Plug 'rbgrouleff/bclose.vim'
@@ -75,12 +76,8 @@ Plug 'rbgrouleff/bclose.vim'
 Plug 'jiangmiao/auto-pairs' " Auto brackets
 Plug 'tpope/vim-surround'   " Adding and changing brackets
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install'  }
-
 Plug 'dpelle/vim-LanguageTool'  " Spell check
 Plug 'florentc/vim-tla'
-
-"Plug 'clbeggs/vim-unicoder'  " Convert latex to unicode
-"Plug 'JuliaEditorSupport/julia-vim'
 
 " Colorschemes
 " Plug 'morhetz/gruvbox'
@@ -98,12 +95,10 @@ Plug 'rakr/vim-one'
 "Plug 'kuntau/ayu-vim' " Ayu colorscheme with italics
 " Plug 'cocopon/iceberg.vim'
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
-"Plug 'tyrannicaltoucan/vim-deep-space'
 call plug#end()
 
 "" Language tool
-let g:languagetool_jar="/home/epiphyte/LanguageTool-5.5/languagetool-commandline.jar"
-" let g:languagetool_cmd="/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -jar /home/epiphyte/LanguageTool-5.5/languagetool-commandline.jar"
+"let g:languagetool_jar="/home/epiphyte/LanguageTool-5.5/languagetool-commandline.jar"
 
 
 let g:NERDCreateDefaultMappings = 1
@@ -111,14 +106,8 @@ let g:NERDSpaceDelims = 1
 let g:NERDToggleCheckAllLines = 1
 
 " File Manager Ranger
-"nnoremap <C-n> :Ranger<CR>
 let g:ranger_map_keys=0
 nnoremap <C-t> :Ranger<CR>
-"nnoremap <C-f> :NERDTreeFind<CR>
-
-" Close nerd tree if it is the last window open.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
 
 " COCNVIM SETUP
 inoremap <silent><expr> <TAB>
@@ -253,12 +242,6 @@ let g:ale_echo_msg_format = '%linter%: %s [%code%]'
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-" C++ Fixers and Linters
-" let g:ale_cpp_clangtidy_executable="/usr/bin/clang-tidy-9"
-" let g:ale_c_clangtidy_executable="/usr/bin/clang-tidy-9"
-" let g:ale_cpp_clangtidy_options = "--format-style=\"google\""
-" let g:ale_cpp_clangtidy_checks = ["google-*", "performance-*", "readability-*", "bugprone-*", "boost-*", "modernize-*"]
-
 " remap vim sneak to t
 nmap q <Plug>Sneak_s
 vmap q <Plug>Sneak_s
@@ -266,7 +249,7 @@ nmap Q <Plug>Sneak_S
 vmap Q <Plug>Sneak_S
 
 "" Toggle Tagbar
-nmap [[ : TagbarToggle<CR>
+"nmap [[ : TagbarToggle<CR>
 
 cnoreabbrev Tagb TagbarToggle
 cnoreabbrev Tabg TagbarToggle
@@ -276,18 +259,12 @@ cnoreabbrev TAGb TagbarToggle
 cnoreabbrev tagb TagbarToggle
 
 " LaTeX
-" set conceallevel=2
-" let g:tex_conceal="abdgm"
-" set concealcursor="n"
 let g:tex_flavor='latex'
 let g:vimtex_view_method='zathura'
 let g:vimtex_quickfix_mode=0
 let g:latex_view_general_viewer = 'zathura'
 " VIMTEX COMPILER OPTIONS SET IN $HOME/.LATEXMKRC
-
-
 let g:vimtex_compiler_method = "latexmk"
-
 let g:vimtex_compiler_latexmk = { 
         \ 'executable' : 'latexmk',
         \ 'options' : [ 
@@ -299,8 +276,6 @@ let g:vimtex_compiler_latexmk = {
         \   '-interaction=nonstopmode',
         \ ],
         \}
-
-
 
 " speeding up vimtex
 let g:tex_fast=""
@@ -319,23 +294,6 @@ function! LinterStatus() abort
     \   all_errors
     \)
 endfunction
-" Airline Stuff
-"nmap n <Plug>(anzu-n-with-echo)
-"nmap N <Plug>(anzu-N-with-echo)
-"nmap * <Plug>(anzu-star-with-echo)
-"nmap # <Plug>(anzu-sharp-with-echo)
-"let g:airline#extensions#ale#enabled = 1
-"let g:airline_extensions = []
-"let g:airline_powerline_fonts = 1
-"
-"let g:airline_section_a = airline#section#create_right(['  ', 'mode',''])
-"let g:airline_section_z = '%{anzu#search_status()}'
-"let g:airline_section_x = 'ALE: %{LinterStatus()}'
-"let g:airline_section_y = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-""let g:airline_section_z = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-"let g:airline_section_error = ''
-"let g:airline_section_warning = ''
-"let g:airline_highlighting_cache = 1
 
 " Code
 let g:python_highlight_space_errors = 0
@@ -348,16 +306,15 @@ if executable('rg')
 endif
 
 "" IndentLine
-"let g:indentLine_char = '∣'
-"let g:indentLine_showFirstIndentLevel = 1
-"let g:indentLine_first_char = '∣'
-let g:indent_guides_guide_size = 1
-let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'txt', 'tex', '']
-let g:indent_guides_enable_on_vim_startup = 1
-au TermEnter * IndentGuidesDisable
-au TermLeave * IndentGuidesEnable
+if exists('g:vscode')
+  let g:indent_guides_guide_size = 1
+  let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'txt', 'tex', '']
+  let g:indent_guides_enable_on_vim_startup = 1
+  au TermEnter * IndentGuidesDisable
+  au TermLeave * IndentGuidesEnable
+endif
+
 let g:ranger_command_override = 'ranger --cmd "set show_hidden=true"'
-"
 let g:ctrlp_user_command = [ '.git/' , 'git --git-dir=%s/.git ls-files -oc --exclude-standard'] " help ignore things we dont want to search for
 let g:netrw_browse_split=2
 let g:netrw_banner = 0
